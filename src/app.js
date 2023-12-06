@@ -7,9 +7,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let products = [
-  { id: 1, name: 'Producto 1', price: 20 },
-  { id: 2, name: 'Producto 2', price: 30 },
-  { id: 3, name: 'Producto 3', price: 40 },
+  { id: 1, name: 'Iphone 11 Pro', price: 900 },
+  { id: 2, name: 'Iphone XS Max', price: 600 },
+  { id: 3, name: 'Sansung S20', price: 300 },
+  { id: 4, name: 'Macbook', price: 3000 },
 ];
 
 app.get('/products', (req, res) => {
@@ -72,6 +73,18 @@ app.delete('/products/:id', (req, res) => {
   products = newProducts;
 
   res.sendStatus(204);
+});
+
+app.get('/search', (req, res) => {
+  const { q } = req.query;
+
+  let filteredProducts = [];
+
+  if (q) {
+    filteredProducts = products.filter((product) => product.name.includes(q));
+  }
+
+  res.json(filteredProducts);
 });
 
 app.listen(port, () => {
