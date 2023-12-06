@@ -4,7 +4,9 @@ const port = 3000;
 
 app.use(express.json());
 
-const products = [
+app.use(express.urlencoded({ extended: true }));
+
+let products = [
   { id: 1, name: 'Producto 1', price: 20 },
   { id: 2, name: 'Producto 2', price: 30 },
   { id: 3, name: 'Producto 3', price: 40 },
@@ -15,6 +17,20 @@ app.get('/products', (req, res) => {
 });
 
 app.post('/products', (req, res) => {
+  const { name, price } = req.body;
+
+  const newProduct = {
+    id: products.length + 1,
+    name: name,
+    price: price,
+  };
+
+  products.push(newProduct);
+
+  res.status(201).json(newProduct);
+});
+
+app.post('/products/form', (req, res) => {
   const { name, price } = req.body;
 
   const newProduct = {
