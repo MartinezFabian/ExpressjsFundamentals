@@ -6,6 +6,15 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware personalizado:
+const loggerMiddleware = (req, res, next) => {
+  console.log(`[${new Date().toLocaleString()}] - method: ${req.method}, url: ${req.url}`);
+  next(); // Llama a la función next() para pasar al siguiente middleware o ruta
+};
+
+// Registra el middleware a nivel de aplicación
+app.use(loggerMiddleware);
+
 let products = [
   { id: 1, name: 'Iphone 11 Pro', price: 900 },
   { id: 2, name: 'Iphone XS Max', price: 600 },
