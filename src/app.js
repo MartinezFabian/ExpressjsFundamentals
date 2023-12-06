@@ -15,6 +15,22 @@ const loggerMiddleware = (req, res, next) => {
 // Registra el middleware a nivel de aplicación
 app.use(loggerMiddleware);
 
+// Middleware para comprobar autenticación
+const isAuthenticated = (req, res, next) => {
+  const authenticated = false;
+
+  if (authenticated) {
+    // Si el usuario está autenticado, pasa al siguiente middleware o ruta
+    next();
+  } else {
+    // Si el usuario no está autenticado, devuelve un mensaje de "Acceso denegado"
+    res.status(401).json({ message: 'Not authorized ' });
+  }
+};
+
+// Registra el middleware a nivel de aplicación
+app.use(isAuthenticated);
+
 let products = [
   { id: 1, name: 'Iphone 11 Pro', price: 900 },
   { id: 2, name: 'Iphone XS Max', price: 600 },
