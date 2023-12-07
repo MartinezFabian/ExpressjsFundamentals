@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+
+app.set('port', 3000);
+app.set('appName', 'Express Server');
 
 app.use(express.json());
 
@@ -112,6 +114,10 @@ app.get('/search', (req, res) => {
   res.json(filteredProducts);
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}: http://localhost:${port}`);
+app.listen(app.get('port'), () => {
+  console.log(
+    `${app.get('appName')} listening on port ${app.get('port')}: http://localhost:${app.get(
+      'port'
+    )}`
+  );
 });
